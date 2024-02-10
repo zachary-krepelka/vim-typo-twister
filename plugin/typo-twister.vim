@@ -1,6 +1,8 @@
 " FILENAME: typo-twister.vim
 " AUTHOR: Zachary Krepelka
 " DATE: Thursday, October 19th, 2023
+" ORIGIN: https://github.com/zachary-krepelka/vim-typo-twister.git
+" DESCRIPTION: Typo correction for the Vim text editor
 
 if exists('g:loaded_typo_twister')
 
