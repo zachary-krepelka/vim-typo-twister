@@ -8,8 +8,7 @@
 
 # typo-twister.vim
 
-This plugin for the Vim text editor aims to correct a very specific kind of
-typographical error called a [transposition error][1].  I'm still working on the
-documentation.
+This plugin aims to correct a very specific kind of typographical error called a
+[transposition error][1].  I'm still working on the documentation.
 
 [1]: https://english.stackexchange.com/q/32889
