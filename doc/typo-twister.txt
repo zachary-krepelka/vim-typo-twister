@@ -1,0 +1,113 @@
+*typo-twister.txt*	Typo correction for the Vim text editor
+*typo-twister*
+
+  _____                 _____        _    _            ~
+ |_   _|  _ _ __  ___  |_   _|_ __ _(_)__| |_ ___ _ _  ~
+   | || || | '_ \/ _ \   | | \ V  V / (_-<  _/ -_) '_| ~
+   |_| \_, | .__/\___/   |_|  \_/\_/|_/__/\__\___|_|   ~
+       |__/|_|                                         ~
+
+Author: Zachary Krepelka
+Date:   Wednesday, February 14th, 2024
+
+Origin: https://github.com/zachary-krepelka/vim-typo-twister.git
+
+================================================================================
+
+TABLE OF CONTENTS 0                                 *typo-twister-contents* {{{1
+
+1. Introduction   .....................................   |typo-twister-intro|
+2. Usage   ............................................   |typo-twister-usage|
+3. Remarks   ..........................................   |typo-twister-remarks|
+
+================================================================================
+
+INTRODUCTION      1                                    *typo-twister-intro* {{{1
+
+This plugin aims to correct a very specific kind of typographical error called a
+transposition error.  This error occurs when the letters of a word are
+mistakenly interchanged.  Here are some examples. >
+
+	retrun > return
+	pritn > print
+	teh > the
+
+Transposition errors are quite common for touch-typists.  We know what keys we
+want to press, but our fingers jump the gun and fire too fast, one before the
+others.  Hence, it is not unusual to press all the right keys, just in the wrong
+order.  This is especially true if you are trying to type fast, say > 90 WPM.
+The amount of downtime between keystrokes becomes an ever smaller target to hit.
+
+Solving the Problem in Vanilla Vim~
+
+Three solutions come to mind.
+
+	1) Repeated application of Vim's transpose command `xp`.
+
+	2) Vim's spellchecker, which requires that one type `[sz=1<Enter>`.
+
+	3) Vim's abbreviation feature, which applies corrections automatically
+	as one types.  One's vimrc might contain something like this. >
+
+		abbreviate retrun return
+		abbreviate pritn print
+		abbreviate teh the
+
+The third option is preferable because corrections are applied automatically.
+In fact, a lot of online articles recommend this solution.
+
+The Problem with this Approach~
+
+There are multiply ways to mistype a word.  Point in case, there are precisely
+119 ways to misspell the word "print" by transposing its characters.  For
+"return," that number grows to 359.  It would be absurd to write a Vim
+abbreviation for each possible misspelling, even for a single word. >
+
+	iab teh the
+	iab hte the
+	iab het the
+	iab eth the
+	iab eht the
+
+The New and Improved Way~
+
+Given a list of words, this plugin corrects every possible transposition error.
+
+================================================================================
+
+USAGE             2                                    *typo-twister-usage* {{{1
+
+Add an array of words to your vimrc, like this: >
+
+	let g:easy_to_mistype_words =
+	\[
+		\ 'return',
+		\ 'print',
+		\ 'the'
+	\]
+
+Limit the list to words that you mistype frequently.
+
+To activate the plugin, run the command `:Twist`.  This could take a while.  For
+that reason, it is advisable to use the plugin only when you know you will be
+typing for an extended period of time.
+
+You can also automate this with an autocommand.  However, this is not
+recommended because it can significantly slow down startup time. >
+
+	autocmd VimEnter * Twist
+
+================================================================================
+
+REMARKS           3                                  *typo-twister-remarks* {{{1
+
+Here is a relevant URL.
+
+https://english.stackexchange.com/q/32889
+
+It is better if the touch typist takes corrective action to prevent
+transposition errors, but sometimes typos of this nature are unavoidable,
+especially if you're taking fast-paced notes.
+
+================================================================================
+vim:tw=80:ts=8:ft=help:fdm=marker
