@@ -3,6 +3,7 @@
 " DATE: Thursday, October 19th, 2023
 " ABOUT: Typo correction for the Vim text editor
 " ORIGIN: https://github.com/zachary-krepelka/vim-typo-twister.git
+" UPDATED: Thursday, February 15th, 2024 at 11:54 PM
 
 if exists('g:loaded_typo_twister')
 
@@ -75,3 +76,10 @@ function! s:source()
 endfunction
 
 command Twist call s:source()
+
+if has("gui_running") && has("menu") && &go =~# 'm'
+
+	amenu <silent> &Plugin.Typo\ Twister.&Twist :Twist<CR>
+	amenu <silent> &Plugin.Typo\ Twister.&Help :tab help typo-twister<CR>
+
+endif
