@@ -36,7 +36,7 @@ Transposition errors are quite common for touch-typists.  We know what keys we
 want to press, but our fingers jump the gun and fire too fast, one before the
 others.  Hence, it is not unusual to press all the right keys, just in the wrong
 order.  This is especially true if you are trying to type fast, say > 90 WPM.
-The amount of downtime between keystrokes becomes an ever smaller target to hit.
+The amount of time between keystrokes becomes an ever smaller target to hit.
 
 Solving the Problem in Vanilla Vim~
 
