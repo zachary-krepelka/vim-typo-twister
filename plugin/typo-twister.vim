@@ -3,7 +3,9 @@
 " DATE: Thursday, October 19th, 2023
 " ABOUT: Typo correction for the Vim text editor
 " ORIGIN: https://github.com/zachary-krepelka/vim-typo-twister.git
-" UPDATED: Thursday, February 15th, 2024 at 11:54 PM
+" UPDATED: Monday, December 2nd, 2024 at 4:29 AM
+
+" Variables {{{1
 
 if exists('g:loaded_typo_twister')
 
@@ -15,7 +17,9 @@ let g:loaded_typo_twister = 1
 
 let s:words = get(g:, 'easy_to_mistype_words', ['the'])
 
-function! s:permutations(word)
+" Functions {{{1
+
+function! s:permute(word)
 
 	function! s:swap(list, i, j)
 		let l:saved     = a:list[a:i]
@@ -51,7 +55,7 @@ endfunction
 
 function! s:abbreviate_all_word_permutations(right)
 
-	for l:wrong in s:permutations(a:right)[1:]
+	for l:wrong in s:permute(a:right)[1:]
 
 		exec 'ab' l:wrong a:right
 
@@ -59,11 +63,11 @@ function! s:abbreviate_all_word_permutations(right)
 
 endfunction
 
-function! s:source()
+function! s:twist(words)
 
 	echo 'Please Wait'
 
-	for l:word in s:words
+	for l:word in a:words
 
 		call s:abbreviate_all_word_permutations(l:word)
 
@@ -75,7 +79,14 @@ function! s:source()
 
 endfunction
 
-command Twist call s:source()
+" Commands {{{1
+
+command! -nargs=* Twist {
+
+	call s:twist(empty(<q-args>) ? s:words : split(<q-args>, ' '))
+}
+
+" Menus {{{1
 
 if has("gui_running") && has("menu") && &go =~# 'm'
 

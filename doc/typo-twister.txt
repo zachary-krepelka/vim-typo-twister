@@ -16,9 +16,11 @@ Origin: https://github.com/zachary-krepelka/vim-typo-twister.git
 
 TABLE OF CONTENTS 0                                 *typo-twister-contents* {{{1
 
-1. Introduction   .....................................   |typo-twister-intro|
-2. Usage   ............................................   |typo-twister-usage|
-3. Remarks   ..........................................   |typo-twister-remarks|
+1. Introduction   .................................   |typo-twister-intro|
+2. Usage   ........................................   |typo-twister-usage|
+3. Example   ......................................   |typo-twister-example|
+4. Limitations   ..................................   |typo-twister-limitations|
+5. Remarks   ......................................   |typo-twister-remarks|
 
 ================================================================================
 
@@ -26,7 +28,7 @@ INTRODUCTION      1                                    *typo-twister-intro* {{{1
 
 This plugin aims to correct a very specific kind of typographical error called a
 transposition error.  This error occurs when the letters of a word are
-mistakenly interchanged.  Here are some examples. >
+mistakenly interchanged.  Here are some examples.  >
 
 	retrun > return
 	pritn > print
@@ -47,7 +49,7 @@ Three solutions come to mind.
 	2) Vim's spellchecker, which requires that one type `[sz=1<Enter>`.
 
 	3) Vim's abbreviation feature, which applies corrections automatically
-	as one types.  One's vimrc might contain something like this. >
+	as one types.  One's vimrc might contain something like this.  >
 
 		abbreviate retrun return
 		abbreviate pritn print
@@ -61,7 +63,7 @@ The Problem with this Approach~
 There are multiply ways to mistype a word.  Point in case, there are precisely
 119 ways to misspell the word "print" by transposing its characters.  For
 "return," that number grows to 359.  It would be absurd to write a Vim
-abbreviation for each possible misspelling, even for a single word. >
+abbreviation for each possible misspelling, even for a single word.  >
 
 	iab teh the
 	iab hte the
@@ -77,37 +79,84 @@ Given a list of words, this plugin corrects every possible transposition error.
 
 USAGE             2                                    *typo-twister-usage* {{{1
 
-Add an array of words to your vimrc, like this: >
+This plugin provides a single command called 'Twist'.  It can be invoked from
+the |Command-line|, but it is also available (without the ability to supply
+arguments) from the menu in gvim, under `Plugin -> Typo Twister -> Twist`.
+
+                                                                        *:Twist*
+	:Twist [words]
+
+		Enable correction of transposition errors for the provided
+		[words].  The [words] are space-delimited.  If no [words] are
+		supplied, then read the words from the list named
+		`g:easy_to_mistype_words` as it was defined in one's |vimrc|.
+
+================================================================================
+
+EXAMPLE           3                                  *typo-twister-example* {{{1
+
+While writing some code, you catch yourself frequently mistyping the word
+"print" in various ways, such as "pritn" or "pirnt".  Furthermore, you observe
+that the proper characters were used; they are just in the wrong order.  This is
+a good opportunity to run the command "Twist print".  From here on out, all of
+these errors will be corrected on the fly.
+
+Later on, you catch yourself making the same type of mistake with the words
+"function", "string", and "return", so you run the command >
+
+	:Twist function string return
+
+Now suppose that you are taking notes for a semester-long philosophy class.  You
+discover that you have a bad habit of mistyping the word "belief," which comes
+up quite often -- "bleief", "beleif", "belife", etc.  If it happens often
+enough, you can add the word to an array of words in your vimrc, like this: >
 
 	let g:easy_to_mistype_words =
 	\[
+		\ 'belief',
 		\ 'return',
 		\ 'print',
 		\ 'the'
 	\]
 
-Limit the list to words that you mistype frequently.
-
-To activate the plugin, run the command `:Twist`.  This could take a while.  For
-that reason, it is advisable to use the plugin only when you know you will be
-typing for an extended period of time.
-
-You can also automate this with an autocommand.  However, this is not
-recommended because it can significantly slow down startup time. >
-
-	autocmd VimEnter * Twist
+By issuing the command `:Twist` with no arguments, the command will be applied
+with the words in this list.
 
 ================================================================================
 
-REMARKS           3                                  *typo-twister-remarks* {{{1
+LIMITATIONS       4                              *typo-twister-limitations* {{{1
+
+`:Twist`ing long words can be very slow.  Because Vim is single-threaded, you
+have to wait for the command to finish.  To indicate that the command is
+running, the message 'Please Wait' will appear, and this will be followed by the
+message 'Finished' after some time.
+
+The list `g:easy_to_mistype_words` is not applied automatically for this reason;
+otherwise, it would significantly slow down startup time.  If this does not
+bother you, you can use an |autocommand| in your |vimrc|:  >
+
+	autocmd VimEnter * Twist
+
+You should limit the list `g:easy_to_mistype_words` to words that you mistype
+frequently.  If the list becomes too long, then the command will take an
+absurdly long time to finish.
+
+================================================================================
+
+REMARKS           5                                  *typo-twister-remarks* {{{1
 
 Here is a relevant URL.
 
 https://english.stackexchange.com/q/32889
+
+The name of this plugin was inspired by this answer to the above question.
+
+https://english.stackexchange.com/a/32892
 
 It is better if the touch typist takes corrective action to prevent
 transposition errors, but sometimes typos of this nature are unavoidable,
 especially if you're taking fast-paced notes.
 
 ================================================================================
+UPDATED: Monday, December 2nd, 2024 at 4:32 AM
 vim:tw=80:ts=8:ft=help:fdm=marker
