@@ -44,10 +44,14 @@ Solving the Problem in Vanilla Vim~
 
 Three solutions come to mind.
 
-	1) Repeated application of Vim's transpose command `xp`.
+	1) Repeated application of Vim's transpose command `xp`. >
 
-	2) Vim's spellchecker, which requires that one type `[sz=1<Enter>`.
+		:helpgrep SWAPPING TWO CHARACTERS<CR>
+<
+	2) Vim's spellchecker, which requires that one type `[sz=1<Enter>`. >
 
+		:help spell-quickstart
+<
 	3) Vim's abbreviation feature, which applies corrections automatically
 	as one types.  One's vimrc might contain something like this.  >
 
@@ -60,7 +64,7 @@ In fact, a lot of online articles recommend this solution.
 
 The Problem with this Approach~
 
-There are multiply ways to mistype a word.  Point in case, there are precisely
+There are multiple ways to mistype a word.  Point in case, there are precisely
 119 ways to misspell the word "print" by transposing its characters.  For
 "return," that number grows to 359.  It would be absurd to write a Vim
 abbreviation for each possible misspelling, even for a single word.  >
