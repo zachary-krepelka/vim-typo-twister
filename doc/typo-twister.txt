@@ -46,7 +46,7 @@ Three solutions come to mind.
 
 	1) Repeated application of Vim's transpose command `xp`. >
 
-		:helpgrep SWAPPING TWO CHARACTERS<CR>
+		:helpgrep SWAPPING TWO CHARACTERS
 <
 	2) Vim's spellchecker, which requires that one type `[sz=1<Enter>`. >
 
